@@ -1,0 +1,58 @@
+apply plugin: 'com.android.application'
+apply plugin: 'org.greenrobot.greendao'
+android {
+    compileSdkVersion 24
+    buildToolsVersion "24.0.2"
+    defaultConfig {
+        applicationId "com.jamesp1949.greendaodemo"
+        minSdkVersion 14
+        targetSdkVersion 24
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        debug {
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        release {
+            buildConfigField "boolean", "LOG_DEBUG", "false"
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    /**
+     schemaVersion 当前数据库结构的版本。结构版本变化时在OpenHelpers中被使用到。当你改变实体或者数据的结构时，
+     这个值应该增加。
+     daoPackage 生成的DAO，DaoMaster和DaoSession的包名。默认是实体的包名。
+     targetGenDir 生成源文件的路径。默认源文件目录是在build目录中的(build/generated/source/greendao)。
+     generateTests 设置是否自动生成单元测试。
+     targetGenDirTest 生成的单元测试的根目录。
+     */
+    greendao {
+        schemaVersion 4
+        targetGenDir 'src/main/java'
+//        generateTests true
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:24.2.1'
+    compile 'com.android.support:design:24.2.1'
+    // 日志管理库
+    compile 'com.github.zhaokaiqiang.klog:library:1.6.0'
+    //greendao数据库管理
+    compile 'org.greenrobot:greendao:3.2.0'
+    // view注解库
+    compile 'com.jakewharton:butterknife:7.0.1'
+    // 列表管理库
+    compile 'com.jude:easyrecyclerview:4.4.0'
+}
